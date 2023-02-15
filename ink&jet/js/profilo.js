@@ -45,7 +45,7 @@ function printPosts(post_list, proprietario){
     for(let i = 0; i < post_list.length; i++){
         result += `
                 <div class="row">
-                    <div class="user col-10 offset-1 col-md-7 mt-2">
+                    <div class="post col-10 offset-1 col-md-7 mt-2">
                         <article id="${post_list[i].id_pubblicazione}">
                             <header>
                                 <p>${post_list[i].data_pubblicazione}</p>
@@ -265,7 +265,7 @@ function updateFollow(id_utente){
 }
 
 window.addEventListener('scroll', () => {
-    if( (window.innerHeight + window.scrollY >= document.body.offsetHeight) && button_value !== 0){
+    if( (window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight) && button_value !== 0){
         showData(button_value);
     }
 })

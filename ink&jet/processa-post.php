@@ -9,6 +9,15 @@ if($_POST["action"] == 1){
     list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["img_pubblicazione"]);
     $img_pubblicazione = $msg;
     $dbh->insertPost($testo_pubblicazione, $data_pubblicazione, $img_pubblicazione, $utente);
+
+    $msg = $_SESSION["nome_utente"] . " ha pubblicato un nuovo post.";
+    $followers = $dbh->getFollowersByUserId($_SESSION["id_utente"]);
+    foreach($followers as $utente){
+        $dbh->addNotification($utente["id_utente"], $msg);
+        // manda la email
+        // mail($utente["email"], "nuovo post", $msg);
+    }
+
     header("location: profilo.php");
 }
 if($_POST["action"] == 2){
