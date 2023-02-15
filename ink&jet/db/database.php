@@ -54,7 +54,7 @@ class DatabaseHelper{
 
     // ottiene gli che utenti che seguono
     public function getFollowersByUserId($id, $num=-1, $row_offset=-1){
-        $query = "SELECT u.id_utente, nome_utente, img_utente 
+        $query = "SELECT u.id_utente, nome_utente, img_utente, email  
                     FROM utente AS u, follow AS f 
                     WHERE f.id_utente_seguito = ? AND f.id_utente = u.id_utente";
         if($num > 0){
@@ -73,7 +73,7 @@ class DatabaseHelper{
 
     // ottiene l'utente
     public function getUserById($id){
-        $query = "SELECT id_utente, data_nascita, nome_utente, img_utente FROM utente WHERE id_utente=?";
+        $query = "SELECT * FROM utente WHERE id_utente=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -110,7 +110,7 @@ class DatabaseHelper{
         $query = "SELECT id_pubblicazione, testo_pubblicazione, img_pubblicazione, data_pubblicazione 
                     FROM pubblicazione 
                     WHERE id_utente=? 
-                    ORDER BY data_pubblicazione DESC";
+                    ORDER BY data_pubblicazione DESC, id_pubblicazione DESC";
         if($num > 0){
             $query .= " LIMIT ? OFFSET ?";
         }
@@ -246,6 +246,14 @@ class DatabaseHelper{
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sssss',$email, $password, $datanascita, $nomeutente, $img_utente);
         return $stmt->execute(); 
+    }
+
+    // aggiunge una notifica
+    public function addNotification($id_utente, $testo){
+        $query = "INSERT INTO notifica (id_utente, testo_notifica) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is', $id_utente, $testo);
+        return $stmt->execute();
     }
 
     // aggiorna il post dell'utente
