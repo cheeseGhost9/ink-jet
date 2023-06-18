@@ -5,19 +5,17 @@ function isActive($pagename){
     }
 }
 
-// SERVE
 function isUserLoggedIn(){
     return !empty($_SESSION['id_utente']);
 }
 
-// SERVE
 function registerLoggedUser($user){
     $_SESSION["id_utente"] = $user["id_utente"];
     $_SESSION["nome_utente"] = $user["nome_utente"];
-    $_SESSION["data_nascita"] = $user["data_nascita"];
+    $_SESSION["email"] = $user["email"];
+    $_SESSION["img_utente"] = $user["img_utente"];
 }
 
-// SERVE
 function getEmptyPost(){
     return array("id_post" => "", "img_post" => "", "testo_post" => "");
 }

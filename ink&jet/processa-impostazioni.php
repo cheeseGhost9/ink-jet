@@ -3,41 +3,50 @@ require_once 'bootstrap.php';
 
 if($_POST["action"] == 1){
     $msg = "";
-    $nome = trim($_POST["nomeutente"]);
-    $email = trim($_POST["email"]);
-    $password = hash('sha256', $_POST["password_confirm"]);
+    $new_username = trim($_POST["username"]);
+    $new_email = trim($_POST["email"]);
+    $password = hash('sha256', $_POST["confirm"]);
+    $test = $dbh->checkUser($new_email, "", $new_username);
+    $username = $_SESSION["nome_utente"];
+    $email = $_SESSION["email"];
+    $img = $_SESSION["img_utente"];
 
-    // controllo se la password è corretta
-    if(count($dbh->checkPassword($_SESSION["id_utente"], $password)) === 0){
+    // controlla se la password è corretta
+    if(count($dbh->checkUser($_SESSION["email"], $password)) === 0){
         $msg .= "Password errata. ";
 
     } else {
         // aggiorna il nome utente
-        if($nome !== "") {
-            if(count($dbh->checkIfUsernameExists($nome)) !== 0){
+        if($new_username !== "") {
+            if(isset($test[0]) && $test[0]["nome_utente"] === $new_username){
                 $msg .= "Il nome utente inserito e' usato da un altro account. ";
             } else {
-                $dbh->updateUserName($_SESSION["id_utente"], $nome);
+                $username = $new_username;
             }
         }
 
         // aggiorna l'immagine del profilo
-        if($_FILES["imgprofilo"]["size"] !== 0){
-            list($result_img, $imgprofilo) = uploadImage(UPLOAD_DIR, $_FILES["imgprofilo"]);
+        if($_FILES["img"]["size"] !== 0){
+            list($result_img, $new_img) = uploadImage(UPLOAD_DIR, $_FILES["img"]);
             if($result_img){
-                $dbh->updateUserImg($_SESSION["id_utente"], $imgprofilo);
+                $img = $new_img;
             } else {
-                $msg .= $imgprofilo;
+                $msg .= $new_img;
             }
         }
 
         // aggiorna l'email
-        if($email !== ""){
-            if(count($dbh->checkIfEmailExists($email)) !== 0) {
+        if($new_email !== ""){
+            if(isset($test[0]) && $test[0]["email"] === $new_email) {
                 $msg .= "L'email inserita e' usata da un altro account. ";
             } else {
-                $dbh->updateUserEmail($_SESSION["id_utente"], $email);
+                $email = $new_email;
             }
+        }
+
+        if(strlen($msg) === 0){
+            $dbh->updateUser($_SESSION["id_utente"], $username, $email, $img);
+            registerLoggedUser($dbh->checkUser($email, $password)[0]);
         }
     }
 
@@ -51,25 +60,25 @@ if($_POST["action"] == 1){
 
 if($_POST["action"] == 2){
 
-    $old_password = hash('sha256', $_POST["old_password"]);
-    $new_password = $_POST["password"];
-    $confirm_password = $_POST["password_confirm"];
+    $old = hash('sha256', $_POST["old"]);
+    $new = $_POST["new"];
+    $confirm = $_POST["confirm"];
     
-
-    if(count($dbh->checkPassword($_SESSION["id_utente"], $old_password)) === 0){
+    // controlla se la vecchia password è corretta
+    if(count($dbh->checkUser($_SESSION["email"], $old)) === 0){
         $_SESSION["errore"] = "La vecchia password è errata.";
         header("location: impostazioni.php?action=2");
     } else {
-        if($new_password === $confirm_password){
-            $new_password = hash('sha256', $new_password);
-            $dbh->updateUserPassword($_SESSION["id_utente"], $new_password);
+        // controlla se la nuova password e quella di conferma combaciano
+        if($new === $confirm){
+            $new = hash('sha256', $new);
+            $dbh->updatePassword($_SESSION["id_utente"], $new);
             header("location: profilo.php");
         } else {
-            $_SESSION["errore"] = "La nuova password non combacia.";
+            $_SESSION["errore"] = "La nuova password e quella di conferma non combaciano.";
             header("location: impostazioni.php?action=2");
         }
     }
 }
-
 
 ?>

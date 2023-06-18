@@ -24,7 +24,7 @@
                 <div class="col-12">
                     <ul class="nav nav-pills flex-md-column">
                         <li class="nav-item col-6 col-md-12">
-                            <a class="nav-link mt-2 mx-2 text-center btn" href="index.php">Home</a>
+                            <a class="nav-link mt-2 mx-2 text-center btn" href="home.php">Home</a>
                         </li>
                         <li class="nav-item col-6 col-md-12">
                             <a class="nav-link mt-2 mx-2 text-center btn" href="profilo.php">Profilo</a>
@@ -33,7 +33,7 @@
                             <a class="nav-link mt-2 mx-2 text-center btn" href="gestisci-post.php" onclick="createCookieAzione(1)">NUOVO POST</a>
                         </li>
                         <li class="nav-item col-6 col-md-12">
-                            <a class="nav-link mt-2 mx-2 text-center btn" href="logout.php">Log Out</a>
+                            <a class="nav-link mt-2 mx-2 text-center btn" href="logout.php">Logout</a>
                         </li>
                     </ul>
                 </div>

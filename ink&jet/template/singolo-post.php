@@ -22,11 +22,11 @@
                     </div>
             </header>
             <section>
-                <?php if($post["img_pubblicazione"] != NULL): ?>
-                    <img src="<?php echo UPLOAD_DIR.$post["img_pubblicazione"]; ?>" alt="" />
+                <?php if($post["img_post"] != NULL): ?>
+                    <img src="<?php echo UPLOAD_DIR.$post["img_post"]; ?>" alt="" />
                 <?php endif; ?>
-                <?php if($post["testo_pubblicazione"] != "" && $post["testo_pubblicazione"] != NULL): ?>
-                    <p class="post_text text-justify"><?php echo $post["testo_pubblicazione"]; ?></p>
+                <?php if($post["testo_post"] != "" && $post["testo_post"] != NULL): ?>
+                    <p class="post_text text-justify"><?php echo $post["testo_post"]; ?></p>
                 <?php endif; ?>
             </section>
         </article>
@@ -35,10 +35,10 @@
 
 <div class="row">
     <div class="col-10 offset-1 col-md-7 mt-2">
-        <form action="post.php?post=<?php echo $post["id_pubblicazione"]; ?>" method="POST">
+        <form action="post.php?post=<?php echo $post["id_post"]; ?>" method="POST">
             <label for="testo_commento">Scrivi commento:</label>
             <textarea id="testo_commento" name="testo_commento" required></textarea>
-            <input type="hidden" name="id_post" value="<?php echo $post["id_pubblicazione"]; ?>" />
+            <input type="hidden" name="id_post" value="<?php echo $post["id_post"]; ?>" />
             <input type="submit" name="submit" value="Commenta" class="btn" />
         </form>
     </div>

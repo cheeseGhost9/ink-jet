@@ -3,49 +3,47 @@ require_once 'bootstrap.php';
 
 if($_POST["action"] == 1){
     //Inserisco post
-    $testo_pubblicazione = htmlspecialchars($_POST["testo_pubblicazione"]);
-    $data_pubblicazione = date("Y-m-d");
+    $testo_post = htmlspecialchars($_POST["testo_post"]);
+    $data_post = date("Y-m-d");
     $utente = $_SESSION["id_utente"];
-    list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["img_pubblicazione"]);
-    $img_pubblicazione = $msg;
-    $dbh->insertPost($testo_pubblicazione, $data_pubblicazione, $img_pubblicazione, $utente);
+    list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["img_post"]);
+    $img_post = $msg;
+    $dbh->insertPost($testo_post, $data_post, $img_post, $utente);
 
     $msg = $_SESSION["nome_utente"] . " ha pubblicato un nuovo post.";
-    $followers = $dbh->getFollowersByUserId($_SESSION["id_utente"]);
+    $followers = $dbh->getUserFollow($_SESSION["id_utente"], "ers");
     foreach($followers as $utente){
         $dbh->addNotification($utente["id_utente"], $msg);
-        // manda la email
-        // mail($utente["email"], "nuovo post", $msg);
     }
 
     header("location: profilo.php");
 }
 if($_POST["action"] == 2){
     //modifico post
-    $testo_pubblicazione = htmlspecialchars($_POST["testo_pubblicazione"]);
-    $id_pubblicazione = $_POST["id_pubblicazione"];
+    $testo_post = htmlspecialchars($_POST["testo_post"]);
+    $id_post = $_POST["id_post"];
     $utente = $_SESSION["id_utente"];
-    if(isset($_FILES["img_pubblicazione"]) && strlen($_FILES["img_pubblicazione"]["name"])>0){
-        list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["img_pubblicazione"]);
+    if(isset($_FILES["img_post"]) && strlen($_FILES["img_post"]["name"])>0){
+        list($result, $msg) = uploadImage(UPLOAD_DIR, $_FILES["img_post"]);
         if($result == 0){
             header("location: profilo.php");
         }
-        $img_pubblicazione = $msg;
+        $img_post = $msg;
     }
     else{
-        $img_pubblicazione = $_POST["oldimg"];
+        $img_post = $_POST["oldimg"];
     }
-    $dbh->updatePostOfUser($id_pubblicazione, $testo_pubblicazione, $img_pubblicazione);
+    $dbh->updatePost($id_post, $testo_post, $img_post);
     $msg = "Post aggiornato correttamente.";
     header("location: profilo.php");
 }
 
 if($_POST["action"] == 3){
     //elimino post
-    $id_pubblicazione = $_POST["id_pubblicazione"];
+    $id_post = $_POST["id_post"];
     $utente = $_SESSION["id_utente"];
-    $dbh->deleteCommentsOfPost($id_pubblicazione);
-    $dbh->deletePostOfUser($id_pubblicazione, $utente);
+    $dbh->deleteCommentsOfPost($id_post);
+    $dbh->deletePostOfUser($id_post, $utente);
     $msg = "Post eliminato correttamente!";
     header("location: profilo.php");
 }

@@ -34,14 +34,14 @@ CREATE TABLE `commento` (
   `testo_commento` varchar(512) DEFAULT NULL,
   `data_commento` date NOT NULL,
   `id_utente` int(11) NOT NULL,
-  `id_pubblicazione` int(11) NOT NULL
+  `id_post` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `commento`
 --
 
-INSERT INTO `commento` (`id_commento`, `testo_commento`, `data_commento`, `id_utente`, `id_pubblicazione`) VALUES
+INSERT INTO `commento` (`id_commento`, `testo_commento`, `data_commento`, `id_utente`, `id_post`) VALUES
 (1, 'che bello', '2023-01-19', 3, 1),
 (2, 'meraviglia', '2023-01-19', 3, 2),
 (3, 'LOL', '2023-01-19', 2, 1),
@@ -89,22 +89,22 @@ CREATE TABLE `notifica` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `pubblicazione`
+-- Struttura della tabella `post`
 --
 
-CREATE TABLE `pubblicazione` (
-  `id_pubblicazione` int(11) NOT NULL,
-  `testo_pubblicazione` varchar(1024) DEFAULT NULL,
-  `img_pubblicazione` varchar(100) DEFAULT NULL,
-  `data_pubblicazione` date NOT NULL,
+CREATE TABLE `post` (
+  `id_post` int(11) NOT NULL,
+  `testo_post` varchar(1024) DEFAULT NULL,
+  `img_post` varchar(100) DEFAULT NULL,
+  `data_post` date NOT NULL,
   `id_utente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dump dei dati per la tabella `pubblicazione`
+-- Dump dei dati per la tabella `post`
 --
 
-INSERT INTO `pubblicazione` (`id_pubblicazione`, `testo_pubblicazione`, `img_pubblicazione`, `data_pubblicazione`, `id_utente`) VALUES
+INSERT INTO `post` (`id_post`, `testo_post`, `img_post`, `data_post`, `id_utente`) VALUES
 (1, 'ciao', NULL, '2023-01-19', 1),
 (2, 'hello', NULL, '2023-01-18', 1),
 (3, 'privit', NULL, '2023-01-02', 1),
@@ -155,7 +155,7 @@ INSERT INTO `utente` (`id_utente`, `email`, `password`, `data_nascita`, `nome_ut
 ALTER TABLE `commento`
   ADD PRIMARY KEY (`id_commento`),
   ADD KEY `fk_commento_utente_idx` (`id_utente`),
-  ADD KEY `fk_commento_pubblicazione_idx` (`id_pubblicazione`);
+  ADD KEY `fk_commento_post_idx` (`id_post`);
 
 --
 -- Indici per le tabelle `follow`
@@ -173,11 +173,11 @@ ALTER TABLE `notifica`
   ADD KEY `fk_notifica_utente_idx` (`id_utente`);
 
 --
--- Indici per le tabelle `pubblicazione`
+-- Indici per le tabelle `post`
 --
-ALTER TABLE `pubblicazione`
-  ADD PRIMARY KEY (`id_pubblicazione`),
-  ADD KEY `fk_pubblicazione_utente_idx` (`id_utente`);
+ALTER TABLE `post`
+  ADD PRIMARY KEY (`id_post`),
+  ADD KEY `fk_post_utente_idx` (`id_utente`);
 
 --
 -- Indici per le tabelle `utente`
@@ -202,10 +202,10 @@ ALTER TABLE `notifica`
   MODIFY `id_notifica` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `pubblicazione`
+-- AUTO_INCREMENT per la tabella `post`
 --
-ALTER TABLE `pubblicazione`
-  MODIFY `id_pubblicazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+ALTER TABLE `post`
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`
@@ -221,7 +221,7 @@ ALTER TABLE `utente`
 -- Limiti per la tabella `commento`
 --
 ALTER TABLE `commento`
-  ADD CONSTRAINT `fk_commento_pubblicazione` FOREIGN KEY (`id_pubblicazione`) REFERENCES `pubblicazione` (`id_pubblicazione`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_commento_post` FOREIGN KEY (`id_post`) REFERENCES `post` (`id_post`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_commento_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -238,10 +238,10 @@ ALTER TABLE `notifica`
   ADD CONSTRAINT `fk_notifica_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limiti per la tabella `pubblicazione`
+-- Limiti per la tabella `post`
 --
-ALTER TABLE `pubblicazione`
-  ADD CONSTRAINT `fk_pubblicazione_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `post`
+  ADD CONSTRAINT `fk_post_utente` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

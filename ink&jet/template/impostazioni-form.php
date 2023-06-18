@@ -10,27 +10,27 @@
                 <?php if($templateParams["action"] == 1): ?>
                     <p class="text-center">Compilare solo i campi che si desidera modificare</p>
                     <li class="list-group-item">
-                        <label for="nomeutente">Nome Utente:</label><input type="text" id="nomeutente" name="nomeutente"/>
+                        <label for="username">Nome Utente:</label><input type="text" id="username" name="username"/>
                     </li>
                     <li class="list-group-item">
-                        <label for="imgprofilo">Immagine</label><input type="file" name="imgprofilo" id="imgprofilo" />
+                        <label for="img">Immagine</label><input type="file" name="img" id="img" />
                     </li>
                     <li class="list-group-item">
                         <label for="email">E-mail:</label><input type="email" id="email" name="email"/>
                     </li>
                     <li class="list-group-item">
-                        <label for="password_confirm">Inserisci password per conferma:</label><input type="password" id="password_confirm" name="password_confirm" required/>
+                        <label for="confirm">Inserisci password per conferma:</label><input type="password" id="confirm" name="confirm" required/>
                     </li>
                 <?php endif; ?>
                 <?php if($templateParams["action"] == 2): ?>
                     <li class="list-group-item">
-                        <label for="password">Vecchia password:</label><input type="password" id="old_password" name="old_password" required/>
+                        <label for="password">Vecchia password:</label><input type="password" id="old_password" name="old" required/>
                     </li>
                     <li class="list-group-item">
-                        <label for="password">Nuova password:</label><input type="password" id="password" name="password" required/>
+                        <label for="password">Nuova password:</label><input type="password" id="password" name="new" required/>
                     </li>
                     <li class="list-group-item">
-                        <label for="password_confirm">Reinserisci la nuova password:</label><input type="password" id="password_confirm" name="password_confirm" required/>
+                        <label for="confirm">Reinserisci la nuova password:</label><input type="password" id="confirm" name="confirm" required/>
                     </li>
                 <?php endif; ?>
                 <input type="submit" name="submit" value="Conferma" class="btn" />

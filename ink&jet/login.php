@@ -3,10 +3,10 @@ require_once 'bootstrap.php';
 
 if(isset($_POST["email"]) && isset($_POST["password"])){
     $password = hash('sha256', $_POST["password"]);
-    $login_result = $dbh->checkLogin($_POST["email"], $password);
-    if(count($login_result)==0){
+    $login_result = $dbh->checkUser($_POST["email"], $password);
+    if(count($login_result) == 0){
         //Login fallito
-        $templateParams["errorelogin"] = "Errore! Controllare email o password!";
+        $templateParams["errore"] = "Errore! Email o password sbagliata!";
     }
     else{
         registerLoggedUser($login_result[0]);
@@ -14,9 +14,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 }
 
 if(isUserLoggedIn()){
-    if(isUserLoggedIn()){
-        header("location: index.php");
-    }
+    header("location: home.php");
 }
 else{
     $templateParams["titolo"] = "login";

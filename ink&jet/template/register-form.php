@@ -3,15 +3,15 @@
     <div class="col-10 offset-1 col-md-7 mt-2">
         <form action="register.php" method="POST">
             <h2 class="text-center">Registrazione</h2>
-            <?php if(isset($templateParams["erroreregistration"])): ?>
-            <p class="text-center"><?php echo $templateParams["erroreregistration"]; ?></p>
+            <?php if(isset($templateParams["errore"])): ?>
+            <p class="text-center"><?php echo $templateParams["errore"]; ?></p>
             <?php endif; ?>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <label for="nomeutente">Nome Utente:</label><input type="text" id="nomeutente" name="nomeutente" required/>
+                    <label for="username">Nome Utente:</label><input type="text" id="username" name="username" required/>
                 </li>
                 <li class="list-group-item">
-                    <label for="datanascita">Data di Nascita:</label><input type="date" id="datanascita" name="datanascita" required/>
+                    <label for="birth">Data di Nascita:</label><input type="date" id="birth" name="birth" required/>
                 </li>
                 <li class="list-group-item">
                     <label for="email">E-mail:</label><input type="email" id="email" name="email" required/>

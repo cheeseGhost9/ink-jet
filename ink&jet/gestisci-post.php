@@ -6,14 +6,14 @@ if(!isUserLoggedIn()){
 }
 
 if( (isset($_GET["id"]) && count($dbh->checkIfUserPost($_SESSION["id_utente"], $_GET["id"])) === 0) || !isset($_COOKIE["azione"]) ){
-    header("location: index.php");
+    header("location: home.php");
 }
 
 if(isset($_COOKIE["azione"]) && $_COOKIE["azione"]!=1){
     if(!isset($_GET["id"])){
-        header("location: index.php");
+        header("location: home.php");
     } else {
-        $risultato = $dbh->getPostById($_GET["id"]);
+        $risultato = $dbh->getPostAndUser($_GET["id"]);
         if(count($risultato) === 0){
             $templateParams["post"] = null;
         }

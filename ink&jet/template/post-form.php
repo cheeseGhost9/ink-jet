@@ -14,18 +14,18 @@
             <?php else: ?>
             <ul>
                 <li>
-                    <?php if(isset($post["testo_pubblicazione"])): ?>
-                    <label for="testo_pubblicazione">Testo:</label><textarea id="testo_pubblicazione" name="testo_pubblicazione"><?php echo $post["testo_pubblicazione"]; ?></textarea>
+                    <?php if(isset($post["testo_post"])): ?>
+                    <label for="testo_post">Testo:</label><textarea id="testo_post" name="testo_post"><?php echo $post["testo_post"]; ?></textarea>
                     <?php else: ?>
-                    <label for="testo_pubblicazione">Testo:</label><textarea id="testo_pubblicazione" name="testo_pubblicazione"></textarea>
+                    <label for="testo_post">Testo:</label><textarea id="testo_post" name="testo_post"></textarea>
                     <?php endif; ?>
                 </li>
                 <li>
                     <?php if($templateParams["azione"]!=3): ?>
-                    <label for="img_pubblicazione">Immagine</label><input type="file" name="img_pubblicazione" id="img_pubblicazione" />
+                    <label for="img_post">Immagine</label><input type="file" name="img_post" id="img_post" />
                     <?php endif; ?>
-                    <?php if($templateParams["azione"]!=1 && $post["img_pubblicazione"] != NULL ): ?>
-                    <img src="<?php echo UPLOAD_DIR.$post["img_pubblicazione"]; ?>" alt="" />
+                    <?php if($templateParams["azione"]!=1 && $post["img_post"] != NULL ): ?>
+                    <img src="<?php echo UPLOAD_DIR.$post["img_post"]; ?>" alt="" />
                     <?php endif; ?>
                 </li>
                 <li>
@@ -34,8 +34,8 @@
                 </li>
             </ul>
                 <?php if($templateParams["azione"]!=1): ?>
-                <input type="hidden" name="id_pubblicazione" value="<?php echo $post["id_pubblicazione"]; ?>" />
-                <input type="hidden" name="oldimg" value="<?php echo $post["img_pubblicazione"]; ?>" />
+                <input type="hidden" name="id_post" value="<?php echo $post["id_post"]; ?>" />
+                <input type="hidden" name="oldimg" value="<?php echo $post["img_post"]; ?>" />
                 <?php endif;?>
 
                 <input type="hidden" name="action" value="<?php echo $templateParams["azione"]; ?>" />
